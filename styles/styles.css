@@ -94,11 +94,11 @@ header h1 {
 
 input[type="text"] {
     width: 150%;
-    padding: 0.75rem 0.75rem; 
-    border-radius: 1rem;
-    border: 0.2rem solid var(--school-blue);
+    padding: 1.5rem 1.5rem; 
+    border-radius: 8rem;
+    border: none;
     outline: none; 
-    font-size:  1rem;
+    font-size:  1.5rem;
     box-sizing: border-box; 
 }
 
@@ -118,7 +118,7 @@ input[type="text"] {
     color: white; /* text color */
     
     padding: var(--button-padding); /* padding for size */
-    border: var(--button-border-width) solid white; /* remove border */
+    border: none; /* remove border */
     border-radius: var(--button-border-radius); /* rounded corners */
 
     font-size: var(--button-font-size); /* font size */
