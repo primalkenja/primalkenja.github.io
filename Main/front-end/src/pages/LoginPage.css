@@ -1,0 +1,92 @@
+:root {
+    --button-padding: 0.625rem 1.25rem;
+    --button-font-size: 1.3rem;
+    --button-border-radius: 2rem;
+    --button-border-width: 0.2rem;
+  
+    --input-height: 2.5rem;
+    --input-width: 20rem;
+    --input-padding: 0.5rem 1rem;
+  
+    --school-blue: #0055A2;
+    --school-gold: #E5A823;
+    --background-color: white;
+  }
+  
+  body {
+    background-color: var(--background-color);
+  }
+  
+  .login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    font-family: 'Roboto', sans-serif;
+    color: var(--school-blue);
+  }
+  
+  .login-container h1 {
+    font-size: 3rem;
+    color: var(--school-blue);
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+  
+  .login-container form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  
+  .login-container form label {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: var(--school-blue);
+    align-self: flex-start;
+    margin-left: calc((100% - var(--input-width)) / 2); /* Align labels with inputs */
+  }
+  
+  .login-container form input {
+    height: var(--input-height);
+    width: var(--input-width);
+    padding: var(--input-padding);
+    border-radius: var(--button-border-radius);
+    border: 2px solid var(--school-blue);
+    font-size: 1.1rem;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+  }
+  
+  .login-container form input::placeholder {
+    font-size: 1rem;
+    color: #aaa;
+  }
+  
+  .login-container form input:focus {
+    border-color: var(--school-gold);
+  }
+  
+  .login-container form button {
+    background-color: var(--school-blue);
+    color: white;
+    padding: var(--button-padding);
+    border: none;
+    border-radius: var(--button-border-radius);
+    font-size: var(--button-font-size);
+    font-weight: bold;
+    cursor: pointer;
+    width: var(--input-width);
+    height: var(--input-height);
+    text-align: center;
+    transition: background-color 0.3s ease;
+  }
+  
+  .login-container form button:hover {
+    background-color: var(--school-gold);
+    color: var(--school-blue);
+  }
+  
