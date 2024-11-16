@@ -6,12 +6,14 @@ import { useNavigate } from 'react-router-dom';
 const HomePage = () => {
   const navigate = useNavigate();
     return (
-    <section className="main-page">
+    <section className="home-page">
       <div className="main-header">
         <div className="header-buttons-container">
-          <div className="header-buttons">
-          <button onClick={() => navigate("/login")}>Log In</button>
-            <button onClick={() => navigate('/signup')}>Sign Up</button>
+          <div className="login-button">
+            <button className="button" onClick={() => navigate("/login")}>Log In</button>
+          </div>
+          <div className="signup-button">
+          <button className="button" onClick={() => navigate('/signup')}>Sign Up</button>
           </div>
         </div>
       </div>
@@ -22,8 +24,8 @@ const HomePage = () => {
         </header>
         <input type="text" aria-label="search" placeholder="Search Course or Professor" />
         <div className="content-buttons">
-          <button>View Courses</button>
-          <button onClick={() => navigate('/professors')}>View Professors</button>
+        <button className="button" onClick={() => navigate('/courses')}>View Courses</button>
+          <button className="button" onClick={() => navigate('/professors')}>View Professors</button>
         </div>
       </div>
     </section>
