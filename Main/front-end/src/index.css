@@ -16,7 +16,7 @@
   
   /* Button styles */
   --button-padding: 0.625rem 1.25rem;
-  --button-font-size: 4rem;
+  --button-font-size: 2rem;
   --button-border-radius: 2rem;
   --button-border-width: 0.2rem;
   --button-gap: 1rem;
@@ -33,13 +33,14 @@ body {
 /* Common button styles */
 .button {
   padding: var(--button-padding);
-  font-size: var(--button-font-size);
+  font-size: var(--global-font-family); 
   font-family: var(--global-font-family);
   border-radius: var(--button-border-radius);
   border-width: var(--button-border-width);
   border: none;
   cursor: pointer;
 }
+
 
 /* Common input styles */
 .input {

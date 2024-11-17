@@ -3,6 +3,10 @@
   background-color: var(--background-color);
 }
 
+.home-page button.button {
+  font-size: 2rem;
+}
+
 .home-page .main-header {
   width: 100%;
   height: 7rem;
@@ -23,20 +27,19 @@
   gap: 0.5rem; 
 }
 
+
 .home-page .login-button button {
   background-color: rgba(255, 255, 255, 0.2);
   color: var(--school-blue);
   transition: 
-    color 0.3s ease,
-    font-weight 0.1s ease;
+    all 0.2s ease; 
 }
 
 .home-page .signup-button button {
   background-color: var(--school-blue);
   color: white;
   transition: 
-    font-weight 0.3 ease, 
-    background-color 0.3s ease;
+    all 0.2s ease; 
 }
 
 .home-page .login-button button:hover {
@@ -50,21 +53,39 @@
 }
 
 .home-page .main-content {
-  position: flex;
+  display: flex;
   flex-direction: column;
+  justify-content: center;
+  height:80vh; 
   align-items: center;
 }
 
 header h1 {
-  font-family:'Montserrat', sans-serif; 
   color: var(--school-blue); 
-  font-size: 4rem;
+  font-size: 7rem;
   font-family: var(--global-font-family);
   text-align: center; 
+
+  transition:text-shadow 0.01s ease-out;  
+  position: relative; 
+}
+
+.home-page .main-content header {
+  position: relative;
+  width: 100%;
+}
+
+header h2 {
+  color: var(--school-blue); 
+  font-size: 2.7rem;
+  font-family: var(--global-font-family);
+  text-align: center; 
+  margin-bottom: 2rem;
+  text-shadow: 0.2rem 0.2rem 0rem color-mix(in srgb, var(--school-gold) 30%, transparent);
 }
 
 input[type="text"] {
-  width: 150%;
+  width: 70%;
   padding: 1.5rem 1.5rem; 
   border-radius: 8rem;
   border: none;
@@ -73,4 +94,22 @@ input[type="text"] {
   font-size:  1.5rem;
   font-family: var(--global-font-family);
   box-sizing: border-box; 
+
+  box-shadow: 0rem 0rem 2rem rgba(0, 0, 0, 0.1); 
+}
+
+.home-page .content-buttons {
+  display: flex; 
+  gap: 2rem;
+  justify-content: center;
+  margin-top: 2rem; 
+}
+
+
+input[type="text"]:hover {
+  box-shadow: 0rem 0rem 2rem rgba(0, 0, 0, 0.2);
+}
+
+input[type="text"]:focus {
+  box-shadow: 0rem 0rem 2rem rgba(0, 0, 0, 0.2);
 }
