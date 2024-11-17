@@ -7,13 +7,17 @@ const HomePage = () => {
 
   useEffect(() => {
     const title = document.querySelector('.home-page header h1');
+    const subtitle = document.querySelector('.home-page header h2');
     let lastX = 0;
     let lastY = 0;
+    let lastX2 = 0;  // for h2
+    let lastY2 = 0;  // for h2
     let animationFrameId = null;
     const easeAmount = 0.08;
     
     const handleMouseMove = (e) => {
-      if (title) {
+      if (title && subtitle) {
+        // For h1
         const rect = title.getBoundingClientRect();
         const titleCenterX = rect.left + rect.width / 2;
         const titleCenterY = rect.top + rect.height / 2;
@@ -21,43 +25,71 @@ const HomePage = () => {
         const deltaX = e.clientX - titleCenterX;
         const deltaY = e.clientY - titleCenterY;
         
-        // Calculate distance from cursor to title center
+        // For h2
+        const rect2 = subtitle.getBoundingClientRect();
+        const title2CenterX = rect2.left + rect2.width / 2;
+        const title2CenterY = rect2.top + rect2.height / 2;
+        
+        const deltaX2 = e.clientX - title2CenterX;
+        const deltaY2 = e.clientY - title2CenterY;
+        
+        // Calculate distances
         const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+        const distance2 = Math.sqrt(deltaX2 * deltaX2 + deltaY2 * deltaY2);
         const maxDistance = Math.sqrt(window.innerWidth * window.innerWidth + window.innerHeight * window.innerHeight);
         
-        // Normalize the offset based on distance
+        // Normalize offsets
         const minOffset = 8;
         const maxOffset = 12;
         const normalizedOffset = minOffset + (distance / maxDistance) * (maxOffset - minOffset);
+        const normalizedOffset2 = minOffset + (distance2 / maxDistance) * (maxOffset - minOffset);
         
         // Prevent division by zero
         const safeDistance = Math.max(distance, 0.1);
+        const safeDistance2 = Math.max(distance2, 0.1);
         
-        // Apply normalized offset
+        // Calculate targets
         const targetX = -(deltaX / safeDistance) * normalizedOffset;
         const targetY = -(deltaY / safeDistance) * normalizedOffset;
+        const targetX2 = -(deltaX2 / safeDistance2) * normalizedOffset2 * 0.5; // Reduced effect for h2
+        const targetY2 = -(deltaY2 / safeDistance2) * normalizedOffset2 * 0.5; // Reduced effect for h2
         
         // Smooth animation loop
         const updateShadow = () => {
+          // Update h1
           lastX += (targetX - lastX) * easeAmount;
           lastY += (targetY - lastY) * easeAmount;
           
-          // Check if shadow is "stuck" (very small movement)
+          // Update h2
+          lastX2 += (targetX2 - lastX2) * easeAmount;
+          lastY2 += (targetY2 - lastY2) * easeAmount;
+          
+          // Check if shadows are "stuck"
           const movement = Math.abs(targetX - lastX) + Math.abs(targetY - lastY);
+          const movement2 = Math.abs(targetX2 - lastX2) + Math.abs(targetY2 - lastY2);
+          
           if (movement < 0.01) {
             lastX = targetX;
             lastY = targetY;
           }
+          if (movement2 < 0.01) {
+            lastX2 = targetX2;
+            lastY2 = targetY2;
+          }
           
-          // Bound checking to prevent extreme values
+          // Bound checking
           lastX = Math.min(Math.max(lastX, -maxOffset), maxOffset);
           lastY = Math.min(Math.max(lastY, -maxOffset), maxOffset);
+          lastX2 = Math.min(Math.max(lastX2, -maxOffset), maxOffset);
+          lastY2 = Math.min(Math.max(lastY2, -maxOffset), maxOffset);
           
+          // Apply shadows
           title.style.textShadow = `${lastX}px ${lastY}px 0 var(--school-gold)`;
+          subtitle.style.textShadow = `${lastX2}px ${lastY2}px 0 var(--school-gold)`;
+          
           animationFrameId = requestAnimationFrame(updateShadow);
         };
         
-        // Cancel any existing animation frame before starting new one
         if (animationFrameId) {
           cancelAnimationFrame(animationFrameId);
         }
@@ -67,7 +99,6 @@ const HomePage = () => {
 
     document.addEventListener('mousemove', handleMouseMove);
     
-    // Cleanup
     return () => {
       document.removeEventListener('mousemove', handleMouseMove);
       if (animationFrameId) {
@@ -75,7 +106,6 @@ const HomePage = () => {
       }
     };
   }, []);
-
   return (
     <section className="home-page">
       <div className="main-header">
@@ -91,7 +121,7 @@ const HomePage = () => {
       <div className="main-content">
         <header>
           <h1><strong>Spartan Insights</strong></h1>
-          <h2>Find, rate, and leave reviews for SJSU <strong>Courses</strong> and <strong>Professors</strong></h2>
+          <h2>FIND, RATE, REVIEWS SJSU COURSES and PROFESSORS</h2>
         </header>
         <input type="text" aria-label="search" placeholder="Search Course or Professor" />
         <div className="content-buttons">

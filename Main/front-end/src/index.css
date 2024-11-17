@@ -41,7 +41,6 @@ body {
   cursor: pointer;
 }
 
-
 /* Common input styles */
 .input {
   padding: var(--spacing-medium);
