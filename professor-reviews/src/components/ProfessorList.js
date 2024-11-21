@@ -29,7 +29,7 @@ const ProfessorList = () => {
       <ul>
         {professors.map(professor => (
           <li key={professor._id}>
-            <Link to={`/professor/${professor._id}`}>{professor.name}</Link>
+            <Link to={`/professors/${professor._id}`}>{professor.name}</Link>
           </li>
         ))}
       </ul>

@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require('express');
 const connectDB = require('./config/db');  // MongoDB connection
 const cors = require('cors');
@@ -21,10 +22,19 @@ app.use('/api/professors', professorRoutes);
 app.use('/api/reviews', reviewRoutes);
 app.use('/api', professorRoutes); 
 
+app.get('/', (req, res) => {
+  res.send('Welcome to Spartan Insight API!');
+});
 
 app.get('/test', (req, res) => {
     res.send('Test route working');
-  });
+});
+
+app.use(express.static(path.join(__dirname, 'frontend', 'build')));
+
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'));
+});
 
 // Start the server
 const PORT = process.env.PORT || 5000;
