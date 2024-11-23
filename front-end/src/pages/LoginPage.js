@@ -1,13 +1,42 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import './LoginPage.css';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import './LoginPage.css';  // Add your CSS styles
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // back end people need to help me out here skull emojis
+
+    // Validation (Optional: Add more complex validation if needed)
+    if (!email || !password) {
+      setError("Email and password are required.");
+      return;
+    }
+
+    const userData = { email, password };
+
+    try {
+      setLoading(true);
+      setError('');
+      const response = await axios.post('http://localhost:5000/api/auth/login', userData);
+
+      // Store the token in local storage upon successful login
+      if (response.data.token) {
+        localStorage.setItem('token', response.data.token);
+        navigate('/'); // Redirect to the home page after login
+      }
+    } catch (err) {
+      console.error('Login error:', err.response ? err.response.data : err.message);
+      setError('Invalid credentials. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -21,17 +50,30 @@ const LoginPage = () => {
       </div>
       <div className="main-content">
         <header>
-          <h1>Log In</h1>
+          <h1>Login</h1>
         </header>
         <form className="login-form" onSubmit={handleSubmit}>
           <div className="form-group">
             <label>Email:</label>
-            <input type="text" placeholder="Enter your @sjsu.edu email" />
+            <input 
+              type="email" 
+              placeholder="Enter your @sjsu.edu email" 
+              value={email}
+              onChange={(e) => setEmail(e.target.value)} 
+              required 
+            />
           </div>
           <div className="form-group">
             <label>Password:</label>
-            <input type="password" placeholder="Enter your password" />
+            <input 
+              type="password" 
+              placeholder="Password" 
+              value={password}
+              onChange={(e) => setPassword(e.target.value)} 
+              required 
+            />
           </div>
+          {error && <div className="error-message">{error}</div>}
           <div className="form-actions">
             <div className="action-row">
               <button 
@@ -39,10 +81,14 @@ const LoginPage = () => {
                 className="signup-link" 
                 onClick={() => navigate('/signup')}
               >
-                Not signed up?
+                Don't have an account? Sign up
               </button>
-              <button type="submit" className="primary-button">
-                Log In
+              <button 
+                type="submit" 
+                className="primary-button" 
+                disabled={loading}
+              >
+                {loading ? 'Logging In...' : 'Login'}
               </button>
             </div>
           </div>

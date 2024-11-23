@@ -121,7 +121,7 @@ const HomePage = () => {
       <div className="main-content">
         <header>
           <h1><strong>Spartan Insights</strong></h1>
-          <h2>FIND, RATE, REVIEWS SJSU COURSES and PROFESSORS</h2>
+          <h2>FIND, RATE, AND REVIEW SJSU PROFESSORS AND COURSES</h2>
         </header>
         <input type="text" aria-label="search" placeholder="Search Course or Professor" />
         <div className="content-buttons">
