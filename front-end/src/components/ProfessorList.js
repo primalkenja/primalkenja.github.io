@@ -39,6 +39,12 @@ const ProfessorList = () => {
             {professor.name}
           </button>
         ))}
+        
+      </div>
+      <div className="create-professor-link">
+        <button className="tiny-link" onClick={() => navigate('/create-professor')}>
+          + Add Professor
+        </button>
       </div>
     </div>
   );
