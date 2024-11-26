@@ -6,7 +6,7 @@ const authRoutes = require('./routes/authRoutes');
 const professorRoutes = require('./routes/professorRoutes');
 const reviewRoutes = require('./routes/reviewRoutes');
 require('dotenv').config();
-// test comment
+//test comment
 const app = express();
 
 // Connect to MongoDB

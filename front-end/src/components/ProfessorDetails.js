@@ -43,7 +43,7 @@ const ProfessorDetails = () => {
       <div className="professor-header">
         <h1>{professor.name}</h1>
         <p>{professor.department}</p>
-        <p>Rating: {professor.rating ? `${professor.rating} / 5` : 'No rating yet'}</p>
+        <p>Rating: {professor.rating ? professor.rating.toFixed(1) : 'No rating yet'} / 5</p>
         <button
           className="add-review-button"
           onClick={() => navigate(`/professors/${id}/add-review`)}
