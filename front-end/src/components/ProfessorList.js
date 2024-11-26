@@ -1,38 +1,45 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import './ProfessorList.css';
 
 const ProfessorList = () => {
   const [professors, setProfessors] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch the professors from backend API
-    axios.get('http://localhost:5000/api/professors')
-      .then(response => {
-        setProfessors(response.data); // Update the state with the professor data
-        setLoading(false); // Set loading to false when data is fetched
-      })
-      .catch(error => {
-        console.error('Error fetching professors:', error);
-        setLoading(false);
-      });
+    const fetchProfessors = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/professors');
+        setProfessors(response.data);
+      } catch (err) {
+        setError('Failed to fetch professors.');
+        console.error(err);
+      }
+    };
+
+    fetchProfessors();
   }, []);
 
-  if (loading) {
-    return <div>Loading...</div>; // Show loading message while fetching data
+  if (error) {
+    return <div className="professor-list-error">{error}</div>;
   }
 
   return (
-    <div>
-      <h1>Professors</h1>
-      <ul>
-        {professors.map(professor => (
-          <li key={professor._id}>
-            <Link to={`/professors/${professor._id}`}>{professor.name}</Link>
-          </li>
+    <div className="professor-list">
+      <h1 className="professor-list-header">Professors</h1>
+      <div className="professor-list-container">
+        {professors.map((professor) => (
+          <button
+            key={professor._id}
+            className="professor-button"
+            onClick={() => navigate(`/professors/${professor._id}`)}
+          >
+            {professor.name}
+          </button>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };

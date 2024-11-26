@@ -84,6 +84,26 @@
   font-size: 1.8rem;
   font-weight: bold;
 }
+.form-group input[type="text"],
+.form-group input[type="email"] {
+  width: 100%;
+  padding: 1.5rem;
+  border-radius: 8rem;
+  border: none;
+  outline: none;
+  font-size: 1.5rem;
+  font-family: var(--global-font-family);
+  box-shadow: 0 0 2rem rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.form-group input[type="text"]:hover,
+.form-group input[type="email"]:hover,
+.form-group input[type="text"]:focus,
+.form-group input[type="email"]:focus {
+  box-shadow: 0 0 2rem rgba(0, 0, 0, 0.2);
+}
 
 .form-group input[type="text"],
 .form-group input[type="password"] {

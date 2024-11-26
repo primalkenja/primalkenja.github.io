@@ -29,10 +29,8 @@ const SignUpPage = () => {
       const response = await axios.post('http://localhost:5000/api/auth/register', userData);
       
       // Store the token in local storage after successful registration
-      if (response.data.token) {
-        localStorage.setItem('token', response.data.token);
-        navigate('/'); // Redirect to the home page after successful registration
-      }
+      console.log('Response from server:', response);
+      navigate('/');
     } catch (err) {
       console.error('Error during signup:', err.response ? err.response.data : err.message);
       setError('An error occurred. Please try again later.');

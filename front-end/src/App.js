@@ -5,6 +5,9 @@ import ProfessorDetails from "./components/ProfessorDetails";
 import HomePage from "./pages/HomePage";
 import SignUpPage from "./pages/SignUpPage";
 import LoginPage from "./pages/LoginPage";
+import CreateProfessor from './pages/CreateProfessor';
+import AddReview from './pages/AddReview';
+
 
 function App() {
   return (
@@ -15,6 +18,8 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/professors" element={<ProfessorList />} />
         <Route path="/professors/:id" element={<ProfessorDetails />} />
+        <Route path="/create-professor" element={<CreateProfessor />} />
+        <Route path="/professors/:id/add-review" element={<AddReview />} />
       </Routes>
     </Router>
   );

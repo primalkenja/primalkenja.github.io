@@ -1,58 +1,77 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { fetchProfessorWithReviews } from '../api';
+import { useParams, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import './ProfessorDetails.css';
 
 const ProfessorDetails = () => {
-  const { id } = useParams(); // Get professor ID from URL params
+  const { id } = useParams();
   const [professor, setProfessor] = useState(null);
   const [reviews, setReviews] = useState([]);
   const [error, setError] = useState('');
-  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchProfessorDetails = async () => {
       try {
-        const response = await fetchProfessorWithReviews(id); // Fetch professor and reviews
-        const { professor, reviews } = response.data; // Destructure the response data
-
-        setProfessor(professor); // Set professor details
-        setReviews(reviews); // Set reviews list
-        setLoading(false);
+        const token = localStorage.getItem('token');
+        if (!token) {
+          throw new Error('Unauthorized: Please log in to view professor details.');
+        }
+        const response = await axios.get(`http://localhost:5000/api/professors/${id}/reviews`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setProfessor(response.data.professor);
+        setReviews(response.data.reviews);
       } catch (err) {
-        console.error('Error fetching professor details:', err);
-        setError('Failed to load professor details.');
-        setLoading(false);
+        setError(err.response?.data?.message || 'Failed to load professor details.');
       }
     };
 
-    fetchData();
+    fetchProfessorDetails();
   }, [id]);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>{error}</p>;
+  if (error) {
+    return <div className="professor-details-error">{error}</div>;
+  }
+
+  if (!professor) {
+    return <div>Loading...</div>;
+  }
 
   return (
-    <section>
-      <h1>{professor?.name || 'Professor Details'}</h1>
-      <h2>Department: {professor?.department}</h2>
-      <h3>Overall Rating: {professor?.rating || 'N/A'}</h3>
+    <div className="professor-details">
+      <div className="professor-header">
+        <h1>{professor.name}</h1>
+        <p>{professor.department}</p>
+        <p>Rating: {professor.rating ? `${professor.rating} / 5` : 'No rating yet'}</p>
+        <button
+          className="add-review-button"
+          onClick={() => navigate(`/professors/${id}/add-review`)}
+        >
+          + Add Review
+        </button>
+      </div>
 
-      <h3>Reviews:</h3>
-      {reviews.length > 0 ? (
-        <ul>
-          {reviews.map((review) => (
-            <li key={review._id}>
-              <p><strong>Reviewer:</strong> {review.user?.username || 'Anonymous'}</p>
-              <p><strong>Rating:</strong> {review.rating}/5</p>
-              <p><strong>Comment:</strong> {review.comment}</p>
-              <p><small>Posted on: {new Date(review.createdAt).toLocaleDateString()}</small></p>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>No reviews available for this professor.</p>
-      )}
-    </section>
+      <div className="reviews-section">
+  <h2>Reviews</h2>
+  {reviews.length === 0 ? (
+    <p>No reviews yet. Be the first to add one!</p>
+  ) : (
+    <ul className="reviews-list">
+      {reviews.map((review) => (
+        <li key={review._id} className="review-item">
+          <p className="review-comment">"{review.comment}"</p>
+          <p className="review-rating">Rating: {review.rating} / 5</p>
+          <p className="review-user">
+            - {review.user ? review.user.username : 'Anonymous'}
+          </p>
+        </li>
+      ))}
+    </ul>
+  )}
+</div>
+
+    </div>
   );
 };
 
